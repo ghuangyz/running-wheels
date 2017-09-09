@@ -1,0 +1,41 @@
+tasks:
+  - name: task1
+    commands:
+      - cmd: echo
+        args:
+          - task1 running
+  - name: task2
+    commands:
+      - cmd: echo
+        args:
+          - task2 running
+  - name: task3
+    commands:
+      - cmd: echo
+        args:
+          - task3 running
+  - name: task4
+    commands:
+      - cmd: echo
+        args:
+          - task4 running
+  - name: task5
+    commands:
+      - cmd: echo
+        args:
+          - task5 running
+  - name: task6
+    commands:
+      - cmd: echo
+        args:
+          - task6 running
+  - name: task7
+    commands:
+      - cmd: echo
+        args:
+          - task7 running
+  - name: task8
+    commands:
+      - cmd: echo
+        args:
+          - task8 running

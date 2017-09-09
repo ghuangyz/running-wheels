@@ -1,0 +1,41 @@
+tasks:
+  - name: task1
+    commands:
+      - cmd: sleep
+        args:
+          - 3
+  - name: task2
+    commands:
+      - cmd: sleep
+        args:
+          - 3
+  - name: task3
+    commands:
+      - cmd: sleep
+        args:
+          - 3
+  - name: task4
+    commands:
+      - cmd: sleep
+        args:
+          - 3
+  - name: task5
+    commands:
+      - cmd: sleep
+        args:
+          - 3
+  - name: task6
+    commands:
+      - cmd: sleep
+        args:
+          - 3
+  - name: task7
+    commands:
+      - cmd: sleep
+        args:
+          - 3
+  - name: task8
+    commands:
+      - cmd: sleep
+        args:
+          - 3

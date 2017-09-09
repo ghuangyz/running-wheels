@@ -1,0 +1,22 @@
+tasks:
+  - name: pkg/task
+    commands:
+      - cmd: go
+        args:
+          - test
+          - -v
+          - github.com/yhuang69/running-wheels/pkg/task
+  - name: pkg/graph
+    commands:
+      - cmd: go
+        args:
+          - test
+          - -v
+          - github.com/yhuang69/running-wheels/pkg/graph
+  - name: pkg/types
+    commands:
+      - cmd: go
+        args:
+          - test
+          - -v
+          - github.com/yhuang69/running-wheels/pkg/types
