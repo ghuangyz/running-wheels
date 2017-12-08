@@ -62,7 +62,7 @@ func (runner *DAGRunner) LoadTasks(taskTable types.TaskTable) error {
 	return nil
 }
 
-func (runner *DAGRunner) Run(numThreads int) (RunStatus, error) {
+func (runner *DAGRunner) Run(numThreads int) (RunSummary, error) {
 	if !runner.loaded {
 		return nil, types.NewError(RunnerNotLoadedError, "Runner can not Run()!")
 	}
@@ -72,7 +72,7 @@ func (runner *DAGRunner) Run(numThreads int) (RunStatus, error) {
 		task.Status = types.White
 	}
 
-	status := NewDAGRunStatus(runner.taskGraph.Size())
+	status := NewDAGRunSummary(runner.taskGraph.Size())
 	startTime := time.Now()
 
 	// MT - For feedbacks the general rule is to make it equal to the size of workers or larger
@@ -163,7 +163,7 @@ func (runner *DAGRunner) runProducer(done chan bool) {
 	}()
 }
 
-func (runner *DAGRunner) runWorkers(done chan bool, workerCount int, status *DAGRunStatus) {
+func (runner *DAGRunner) runWorkers(done chan bool, workerCount int, summary *DAGRunSummary) {
 	for i := 0; i < workerCount; i++ {
 		go func(id int) {
 			for taskNode := range runner.workloads {
@@ -186,9 +186,12 @@ func (runner *DAGRunner) runWorkers(done chan bool, workerCount int, status *DAG
 					} else {
 						task.Status = types.Green
 					}
-					log.Printf("Worker %d [Finished] %s [%s]\n", id, task.Name, task.Status)
+					log.Printf(
+						"Worker %d [Finished] %s [%s]\n",
+						id, task.Name, task.Status)
 				} else {
-					log.Printf("Worker %d [Skipping] %s [%s]\n", id, task.Name, task.Status)
+					log.Printf("Worker %d [Skipping] %s [%s]\n",
+						id, task.Name, task.Status)
 				}
 
 				result := &Result{
@@ -198,7 +201,7 @@ func (runner *DAGRunner) runWorkers(done chan bool, workerCount int, status *DAG
 					Status:  task.Status,
 					Elapsed: time.Since(start),
 				}
-				status.AddTaskResult(task.Id, task.Name, result)
+				summary.AddTaskResult(task.Id, task.Name, result)
 				if taskNode.HasNeighbor() {
 					runner.feedbacks <- taskNode
 				}

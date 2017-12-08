@@ -14,34 +14,34 @@ type Result struct {
 	Elapsed time.Duration
 }
 
-type DAGRunStatus struct {
+type DAGRunSummary struct {
 	elapsed time.Duration
 	results []*Result
 	names   []string
 }
 
-func NewDAGRunStatus(count int) *DAGRunStatus {
-	status := new(DAGRunStatus)
+func NewDAGRunSummary(count int) *DAGRunSummary {
+	status := new(DAGRunSummary)
 	status.results = make([]*Result, count)
 	status.names = make([]string, count)
 	return status
 }
 
-func (status *DAGRunStatus) AddTaskResult(id int, name string, result interface{}) {
+func (status *DAGRunSummary) AddTaskResult(id int, name string, result interface{}) {
 	tmp, _ := result.(*Result)
 	status.results[id] = tmp
 	status.names[id] = name
 }
 
-func (status *DAGRunStatus) SetElapsed(elapsed time.Duration) {
+func (status *DAGRunSummary) SetElapsed(elapsed time.Duration) {
 	status.elapsed = elapsed
 }
 
-func (status *DAGRunStatus) Elapsed() time.Duration {
+func (status *DAGRunSummary) Elapsed() time.Duration {
 	return status.elapsed
 }
 
-func (status *DAGRunStatus) TaskElapsed() map[string]time.Duration {
+func (status *DAGRunSummary) TaskElapsed() map[string]time.Duration {
 	ret := make(map[string]time.Duration)
 	for i, result := range status.results {
 		name := status.names[i]
@@ -50,7 +50,7 @@ func (status *DAGRunStatus) TaskElapsed() map[string]time.Duration {
 	return ret
 }
 
-func (status *DAGRunStatus) TaskOutput() map[string]string {
+func (status *DAGRunSummary) TaskOutput() map[string]string {
 	ret := make(map[string]string)
 	for i, result := range status.results {
 		name := status.names[i]
@@ -73,7 +73,7 @@ func (status *DAGRunStatus) TaskOutput() map[string]string {
 	return ret
 }
 
-func (status *DAGRunStatus) TaskStatus() map[string]string {
+func (status *DAGRunSummary) TaskStatus() map[string]string {
 	ret := make(map[string]string)
 	for i, result := range status.results {
 		name := status.names[i]
@@ -82,7 +82,7 @@ func (status *DAGRunStatus) TaskStatus() map[string]string {
 	return ret
 }
 
-func (status *DAGRunStatus) Scalability() float32 {
+func (status *DAGRunSummary) Scalability() float32 {
 	var accumulated int64 = 0
 	for _, result := range status.results {
 		accumulated += result.Elapsed.Nanoseconds()
