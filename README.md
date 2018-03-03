@@ -11,7 +11,24 @@ cd bin
 ### Run
 This is how you run `running-wheels`
 ```
-running-wheels run -filename=path/to/task/yaml/file
+running-wheels run --filename=path/to/task/yaml/file
+```
+
+Full help
+```
+usage: running-wheels [<flags>] <command> [<args> ...]
+
+A thread DAG task runner
+
+Flags:
+  --help  Show context-sensitive help (also try --help-long and --help-man).
+
+Commands:
+  help [<command>...]
+    Show help.
+
+  run --filename=FILENAME [<flags>]
+    Run a DAG task
 ```
 
 ### Task YAML file
