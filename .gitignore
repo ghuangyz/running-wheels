@@ -1,1 +1,3 @@
 bin/running-wheels
+./running-wheels
+./testdata/test*.txt
