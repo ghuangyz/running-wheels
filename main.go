@@ -1,55 +1,40 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"github.com/yhuang69/running-wheels/pkg/task"
 	"github.com/yhuang69/running-wheels/pkg/types"
 	"os"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
-type RunCommandOptions struct {
-	Threads  *int
-	Filename *string
-}
+var (
+	rwApp = kingpin.New("running-wheels", "A thread DAG task runner")
+
+	// the run subcommand
+	run = rwApp.Command("run", "Run a DAG task")
+	runFilename = run.Flag("filename", "path to the file of tasks in YAML format").Required().String()
+	runThreads = run.Flag("threads", "number of threads to use, default is 4").Default("4").Int()
+)
 
 func main() {
-	runCommand := flag.NewFlagSet("run", flag.ExitOnError)
-	rcOptions := RunCommandOptions{}
-	rcOptions.Threads = runCommand.Int("threads", 4, "-threads=N")
-	rcOptions.Filename = runCommand.String(
-		"filename",
-		"",
-		"-filename=path/to/task/description/file",
-	)
-
-	if len(os.Args) < 2 {
-		fmt.Println("Usage: running-wheels [command] [-options]")
-		os.Exit(1)
+	switch kingpin.MustParse(rwApp.Parse(os.Args[1:])) {
+	case run.FullCommand():
+		runTask(*runFilename, *runThreads)
 	}
+}
 
-	switch os.Args[1] {
-	case "run":
-		runCommand.Parse(os.Args[2:])
-		if *rcOptions.Filename == "" {
-			fmt.Println("Usage: running-wheels run -filename=path/to/file [-options]")
-			os.Exit(1)
-		}
-	default:
-		flag.PrintDefaults()
-		os.Exit(1)
-	}
-
+func runTask(filename string, threads int) {
 	var runner task.Runner
 	runner = task.NewDAGRunner()
-	taskTable, err := types.LoadTaskTable(*rcOptions.Filename)
+	taskTable, err := types.LoadTaskTable(filename)
 	if err != nil {
 		fmt.Println(types.ErrorStackTrace(err))
 		return
 	}
 
 	runner.LoadTasks(taskTable)
-	status, err := runner.Run(*rcOptions.Threads)
+	status, err := runner.Run(threads)
 	if err != nil {
 		fmt.Println(types.ErrorStackTrace(err))
 	} else {
