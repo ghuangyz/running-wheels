@@ -2,7 +2,7 @@ package graph
 
 import (
 	"fmt"
-	"github.com/yhuang69/running-wheels/pkg/types"
+	"github.com/ghuangyz/running-wheels/pkg/types"
 	"strings"
 	"testing"
 )

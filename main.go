@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/yhuang69/running-wheels/pkg/task"
-	"github.com/yhuang69/running-wheels/pkg/types"
+	"github.com/ghuangyz/running-wheels/pkg/task"
+	"github.com/ghuangyz/running-wheels/pkg/types"
 	"os"
 	"gopkg.in/alecthomas/kingpin.v2"
 )

@@ -1,7 +1,7 @@
 package task
 
 import (
-	"github.com/yhuang69/running-wheels/pkg/types"
+	"github.com/ghuangyz/running-wheels/pkg/types"
 )
 
 type Runner interface {
