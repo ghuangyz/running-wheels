@@ -3,9 +3,9 @@ package task
 import (
 	"bytes"
 	"fmt"
-	"github.com/yhuang69/running-wheels/pkg/graph"
-	"github.com/yhuang69/running-wheels/pkg/types"
-	"github.com/yhuang69/running-wheels/pkg/utils"
+	"github.com/ghuangyz/running-wheels/pkg/graph"
+	"github.com/ghuangyz/running-wheels/pkg/types"
+	"github.com/ghuangyz/running-wheels/pkg/utils"
 	"log"
 	"time"
 )
